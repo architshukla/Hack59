@@ -1,0 +1,57 @@
+
+<!doctype html>
+<head>
+
+	<!-- Basics -->
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script type="text/javascript" src="../assets/js/jquery-1.11.0.js"></script>
+	<script type="text/javascript" >
+	function addPoolEvent() {
+		var eventname = $('#eventname').val();
+		var eventamount = $('#eventamount').val();
+
+		$.post("addPoolEvent.php", { name: eventname , amount: eventamount } ,true).done(function(data){
+			alert(data);
+		});
+	}
+	</script>
+	<title>Pool Event</title>
+</head>
+
+	<!-- Main HTML -->
+
+<body>
+
+	<br>
+	<div id="banner">
+	</div>
+	<div id="container">
+
+		<form>
+
+		<label for="Event Name">Enter Event Name</label>
+
+		<input type="text" id="eventname" name="eventname" required>
+
+		</br>
+		<label for="Amount">Enter Amount </label>
+
+		<input type="text" id="eventamount" name="amount" required>
+
+		<div id="lower">
+
+		<input type="button" value="Create" onclick="addPoolEvent()">
+
+		</div>
+
+		</form>
+
+	</div>
+
+	<!-- End Page Content -->
+
+</body>
+
+</html>
