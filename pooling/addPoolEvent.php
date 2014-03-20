@@ -1,7 +1,7 @@
 <?php
-	$name = "dummyevent";
+	$name = $_POST['eventname'];
 	$creatorname = "archit";
-	$amount = 10000;
+	$amount = $_POST['amount'];
 
 	require_once("../includes/connection.php");
 	if(mysqli_query($connection, "insert into poolevents(eventname, creatorname, amount) values(\"$name\",\"$creatorname\", $amount);") == FALSE)
