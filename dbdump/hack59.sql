@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 4.1.9
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 20, 2014 at 10:53 PM
--- Server version: 5.5.32
--- PHP Version: 5.4.19
+-- Host: localhost
+-- Generation Time: Mar 20, 2014 at 10:45 PM
+-- Server version: 5.6.13
+-- PHP Version: 5.4.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `hack59`
 --
-CREATE DATABASE IF NOT EXISTS `hack59` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `hack59`;
 
 -- --------------------------------------------------------
 
@@ -42,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `eventmembers` (
 
 INSERT INTO `eventmembers` (`eventid`, `membername`, `amount`, `what`) VALUES
 (2, 'something', 9000, ''),
+(3, '', 0, ''),
 (3, 'archit', 794, ''),
 (3, 'cat', 562, ''),
 (3, 'rohit', 210, ''),
@@ -49,7 +48,9 @@ INSERT INTO `eventmembers` (`eventid`, `membername`, `amount`, `what`) VALUES
 (4, 'archit', 1000, 'food'),
 (4, 'cat', 562, ''),
 (4, 'rohit', 210, ''),
-(4, 'sandeep', 371, '');
+(4, 'sandeep', 371, ''),
+(6, '', 0, ''),
+(12, 'newmember', 0, '');
 
 -- --------------------------------------------------------
 
@@ -63,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   `creatorname` varchar(40) NOT NULL,
   `settled` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`eventid`,`creatorname`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `events`
@@ -71,7 +72,8 @@ CREATE TABLE IF NOT EXISTS `events` (
 
 INSERT INTO `events` (`eventid`, `eventname`, `creatorname`, `settled`) VALUES
 (3, 'dummyevent', 'archit', 1),
-(4, 'dummyevent', 'archit', 0);
+(4, 'dummyevent', 'archit', 0),
+(7, 'asda', 'asdas', 0);
 
 -- --------------------------------------------------------
 
@@ -86,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `poolevents` (
   `settled` tinyint(1) NOT NULL,
   `amount` float NOT NULL,
   PRIMARY KEY (`eventid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `poolevents`
@@ -94,7 +96,8 @@ CREATE TABLE IF NOT EXISTS `poolevents` (
 
 INSERT INTO `poolevents` (`eventid`, `eventname`, `creatorname`, `settled`, `amount`) VALUES
 (1, 'dummyevent', 'archit', 1, 10000),
-(2, 'dummyevent', 'archit', 0, 10000);
+(2, 'dummyevent', 'archit', 0, 10000),
+(6, 'evensa', 'awdas', 0, 12312);
 
 -- --------------------------------------------------------
 
@@ -105,7 +108,8 @@ INSERT INTO `poolevents` (`eventid`, `eventname`, `creatorname`, `settled`, `amo
 CREATE TABLE IF NOT EXISTS `poolmembers` (
   `eventid` int(11) NOT NULL,
   `membername` varchar(40) NOT NULL,
-  `amount` float NOT NULL
+  `amount` float NOT NULL,
+  PRIMARY KEY (`eventid`,`membername`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

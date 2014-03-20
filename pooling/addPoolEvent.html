@@ -9,12 +9,16 @@
 	<script type="text/javascript" src="../assets/js/jquery-1.11.0.js"></script>
 	<script type="text/javascript" >
 	function addPoolEvent() {
-		var eventname = $('#eventname').val();
+		var crname = $('#creatorname').val();
+		var evname = $('#eventname').val();
 		var eventamount = $('#eventamount').val();
-
-		$.post("addPoolEvent.php", { name: eventname , amount: eventamount } ,true).done(function(data){
-			alert(data);
-		});
+		if(crname || evname || eventamount) {
+			$.post("addPoolEvent.php", { creatorname: crname, eventname: evname , amount: eventamount } ,true).done(function(data){
+				alert(data);
+			});
+		}else {
+			alert("message: Enter eventname and amount");
+		}
 	}
 	</script>
 	<title>Pool Event</title>
@@ -30,6 +34,10 @@
 	<div id="container">
 
 		<form>
+		<label for="Creator Name">Enter Creator name</label>
+
+		<input type="text" id="creatorname" name="creatorname" required>
+
 
 		<label for="Event Name">Enter Event Name</label>
 
