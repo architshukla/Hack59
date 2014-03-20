@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  	<title>Split</title>
+  	<meta content="text/html; charset=utf-8" http-equiv="content-type" />
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<!-- Bootstrap -->
+  	<link href="../assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  	<script src='../assets/js/jquery-1.11.0.js'></script>
+  	<script src='../assets/js/bootstrap.min.js'></script>
+  	<script>
+  		function showSplit()
+  		{
+  			$.post("split.php", {eventid: $("#eventid").val()}, true).done(function(done){
+
+  				for(var i=0; i < done.length; i++)
+  				{
+  					var table = document.getElementById('splitTable');
+  					var lastRow = table.rows.length;
+  					var row = table.insertRow(lastRow);
+  					
+  					var cellLeft = row.insertCell(0);
+  					var textNode = document.createTextNode(done[i]["give"] + " should give " + done[i]["get"]);
+  					cellLeft.appendChild(textNode);
+
+  					var cellLeft = row.insertCell(1);
+  					var textNode = document.createTextNode(done[i]["balance"]);
+  					cellLeft.appendChild(textNode);
+
+  					var cellLeft = row.insertCell(2);
+  					var textNode = document.createTextNode(done[i]["what"]);
+  					cellLeft.appendChild(textNode);
+  				}
+  			});
+  		}
+  	</script>
+</head>
+<body>
+	<input type="text" id="eventid" placeholder="Enter Event ID"/>
+	<input type="button" onclick="showSplit();" value="Split the bills!"/>
+	<div>
+		<table id="splitTable" border>
+		</table>
+	</div>
+</body>
+</html>
