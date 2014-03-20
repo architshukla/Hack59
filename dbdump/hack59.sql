@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2014 at 09:55 PM
+-- Generation Time: Mar 20, 2014 at 10:53 PM
 -- Server version: 5.5.32
 -- PHP Version: 5.4.19
 
@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `eventmembers` (
   `eventid` int(11) NOT NULL,
   `membername` varchar(40) NOT NULL,
   `amount` float NOT NULL,
+  `what` varchar(50) NOT NULL,
   PRIMARY KEY (`eventid`,`membername`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -39,16 +40,16 @@ CREATE TABLE IF NOT EXISTS `eventmembers` (
 -- Dumping data for table `eventmembers`
 --
 
-INSERT INTO `eventmembers` (`eventid`, `membername`, `amount`) VALUES
-(2, 'something', 9000),
-(3, 'archit', 794),
-(3, 'cat', 562),
-(3, 'rohit', 210),
-(3, 'sandeep', 371),
-(4, 'archit', 794),
-(4, 'cat', 562),
-(4, 'rohit', 210),
-(4, 'sandeep', 371);
+INSERT INTO `eventmembers` (`eventid`, `membername`, `amount`, `what`) VALUES
+(2, 'something', 9000, ''),
+(3, 'archit', 794, ''),
+(3, 'cat', 562, ''),
+(3, 'rohit', 210, ''),
+(3, 'sandeep', 371, ''),
+(4, 'archit', 1000, 'food'),
+(4, 'cat', 562, ''),
+(4, 'rohit', 210, ''),
+(4, 'sandeep', 371, '');
 
 -- --------------------------------------------------------
 

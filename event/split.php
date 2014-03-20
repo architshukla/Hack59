@@ -1,8 +1,5 @@
 <?php
-	$var = '[{"name":"sandeep", "amount": 371, "what": "food"}, 
-			{"name":"cat", "amount": 562, "what": "water"},
-			{"name":"archit", "amount": 794, "what": "transport"},
-			{"name":"rohit", "amount": 210, "what": "fun"}]';
+	$eventid=4;
 
 	function sortAsc($a, $b)
 	{
@@ -21,22 +18,21 @@
 
 	require_once("../includes/connection.php");
 	
-	$results = json_decode($var, true);
+	$results = [];
 	
-	if(!$results)
+	if(($data = mysqli_query($connection, "select * from eventmembers where eventid=$eventid")) == FALSE)
 	{
-		return "error:Incorrect JSON format.";
+		echo "error:Event members not found.";
+	}
+	else
+	{
+		while($row = mysqli_fetch_array($data))
+		{
+			array_push($results, array("name"=> $row["membername"], "amount"=> $row["amount"], "what"=> $row["what"]));
+		}
 	}
 
 	$averageValue = average($results);
-
-	foreach($results as $result)
-	{
-		if(mysqli_query($connection, "update eventmembers set amount=".$result["amount"]." where membername='".$result["name"]."'") == FALSE)
-		{
-			echo "error:Amount update failed. ".mysqli_error($connection);
-		}
-	}
 
 	$get = [];
 	$give = [];
