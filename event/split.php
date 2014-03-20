@@ -1,4 +1,9 @@
 <?php
+	$var = '[{"name":"sandeep", "amount": 371, "what": "food"}, 
+			{"name":"cat", "amount": 562, "what": "water"},
+			{"name":"archit", "amount": 794, "what": "transport"},
+			{"name":"rohit", "amount": 210, "what": "fun"}]';
+
 	function sortAsc($a, $b)
 	{
     	return $b["amount"] - $a["amount"];
@@ -13,11 +18,8 @@
 		}
 		return $averageValue/count($ourJSON);
 	}
-	
-	$var = '[{"name":"G1", "amount": 371, "what": "food"}, 
-			{"name":"G2", "amount": 562, "what": "water"},
-			{"name":"G3", "amount": 794, "what": "transport"},
-			{"name":"G4", "amount": 210, "what": "fun"}]';
+
+	require_once("../includes/connection.php");
 	
 	$results = json_decode($var, true);
 	
@@ -27,6 +29,14 @@
 	}
 
 	$averageValue = average($results);
+
+	foreach($results as $result)
+	{
+		if(mysqli_query($connection, "update eventmembers set amount=".$result["amount"]." where membername='".$result["name"]."'") == FALSE)
+		{
+			echo "error:Amount update failed. ".mysqli_error($connection);
+		}
+	}
 
 	$get = [];
 	$give = [];
@@ -75,5 +85,6 @@
 		}
 	}
 
-	echo  json_encode($output)
+	echo  json_encode($output);
+	require_once("../includes/footer.php");
 ?>
