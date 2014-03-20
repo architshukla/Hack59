@@ -1,0 +1,117 @@
+<html>
+
+<head>
+
+<link type="text/css" href="assets/css/c3.css" />
+<script type="text/javascript" src="assets/js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="assets/js/d3.js"></script>
+<script type="text/javascript" src="assets/js/c3.js"></script>
+
+</head>
+<body>
+<script type="text/javascript">
+
+function getCobrand(){
+var usession;
+$.ajax({
+  type: "POST",
+  url: "yodlee/cobrand.php",
+  data: { login: "sbCobshashank", password: "aa6923e1-16c9-4512-8174-1cbd8f8b003c" },
+  async: false
+})
+  .done(function( data ) {
+  usession=data.Body.cobrandConversationCredentials.sessionToken;
+  });
+  return usession;
+}
+
+function getToken(usession){
+var usertoken;
+$.ajax({
+  type: "POST",
+  url: "yodlee/usertoken.php",
+  data: { login: "sbMemshashank1", password: "sbMemshashank1#123" , session: usession},
+  async: false
+})
+  .done(function( data ) {
+  usertoken=data.Body.userContext.conversationCredentials.sessionToken;
+  });
+  return usertoken;
+ }
+
+
+function getTransactions(){
+
+	var usession = getCobrand();
+	var usertoken = getToken(usession);
+var obj;
+$.ajax({
+  type: "POST",
+  url: "yodlee/getTransactions.php",
+  data: { session: usession, usertoken: usertoken},
+  async: false
+})
+  .done(function( data ) {
+obj = data;  });
+return obj;
+}
+
+
+</script>
+
+<table border>
+<script type="text/javascript">
+var tranjson = getTransactions();
+var cat = {};
+var piecols = [];
+var names = {};
+console.log(tranjson);
+for(var t in tranjson.Body.searchResult.transactions)
+{
+
+	var ele = tranjson.Body.searchResult.transactions[t]; 
+	var catname  = ele.category.categoryName;
+	console.log(catname);
+	if (catname in cat)
+		cat[catname] += parseFloat(ele.amount.amount);
+
+	else
+		cat[catname] = parseFloat(ele.amount.amount);
+}
+
+var i=0;
+for(ele in cat){
+
+	var temp = [];
+	temp.push('id'+i);
+	temp.push(cat[ele]);
+	piecols.push(temp);
+	names['id'+i]=ele;
+	//if(ele.transactionType!="debit")
+	//	continue;
+	document.write("<tr>");
+
+	document.write("<td>"+ele+"</td><td>"+cat[ele]+"</td>");
+	document.write("</tr>");
+	i=i+1;
+}
+</script>
+</table>
+
+<div class='chart'>
+<div id='chart'></div>
+</div>
+
+<script type="text/javascript">
+var chart = c3.generate({
+    data: {
+        // iris data from R
+        columns: piecols,
+        names: names,
+        type : 'pie'
+    }
+});
+</script>
+
+</body>
+</html>

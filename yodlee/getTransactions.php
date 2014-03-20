@@ -35,4 +35,6 @@ $config = array(
 
 $response_to_request   = Yodlee\restClient::Post($config["url"], $config["parameters"]);
 
-print json_encode($response_to_request);
+header('Content-type: application/json');
+echo json_encode($response_to_request);
+?>

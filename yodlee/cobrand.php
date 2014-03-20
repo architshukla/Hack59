@@ -22,5 +22,6 @@ $response = array(
 	"isValid"      => true,
 	"Body"         => $response_to_request["Body"]
 );
-
-print json_encode($response);
+header('Content-type: application/json');
+echo json_encode($response);
+?>

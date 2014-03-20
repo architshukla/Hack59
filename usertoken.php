@@ -34,8 +34,5 @@ if($isErrorLocalExist){
 		"Body"         => $response_to_request["Body"]
 	);
 }
-
-
 header('Content-type: application/json');
-echo json_encode($response);
-?>
+print json_encode($response);
