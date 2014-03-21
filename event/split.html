@@ -9,9 +9,15 @@
   	<script src='../assets/js/jquery-1.11.0.js'></script>
   	<script src='../assets/js/bootstrap.min.js'></script>
   	<script>
+    $.post("getEvents.php").done(function(data) {
+          document.getElementById("tableDiv").innerHTML=data;
+        });
   		function showSplit()
   		{
-  			$.post("split.php", {eventid: $("#eventid").val()}, true).done(function(done){
+  			$.post("split.php", {eventid: $("input[type=radio]:checked").val()}, true).done(function(done){
+
+          var table = document.getElementById('splitTable');
+          table.innerHTML="";
 
   				for(var i=0; i < done.length; i++)
   				{
@@ -31,12 +37,16 @@
   					var textNode = document.createTextNode(done[i]["what"]);
   					cellLeft.appendChild(textNode);
   				}
+          $.post("endEvent.php", {eventid: $("input[type=radio]:checked").val()}).done(function(data) {
+              alert(data);
+            });
   			});
   		}
   	</script>
 </head>
 <body>
-	<input type="text" id="eventid" placeholder="Enter Event ID"/>
+  <div id="tableDiv"></div>
+	<!-- <input type="text" id="eventid" placeholder="Enter Event ID"/> -->
 	<input type="button" onclick="showSplit();" value="Split the bills!"/>
 	<div>
 		<table id="splitTable" border>

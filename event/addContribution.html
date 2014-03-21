@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<script type="text/javascript" src="../assets/js/jquery-1.11.0.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+function getCobrand(){
+var usession;
+$.ajax({
+  type: "POST",
+  url: "../yodlee/cobrand.php",
+  data: { login: "sbCobshashank", password: "aa6923e1-16c9-4512-8174-1cbd8f8b003c" },
+  async: false
+})
+  .done(function( data ) {
+  usession=data.Body.cobrandConversationCredentials.sessionToken;
+  });
+  return usession;
+}
+
+function getToken(usession){
+var usertoken;
+$.ajax({
+  type: "POST",
+  url: "../yodlee/usertoken.php",
+  data: { login: "sbMemshashank1", password: "sbMemshashank1#123" , session: usession},
+  async: false
+})
+  .done(function( data ) {
+  usertoken=data.Body.userContext.conversationCredentials.sessionToken;
+  });
+  return usertoken;
+ }
+
+
+function getTransactions(){
+
+	var usession = getCobrand();
+	var usertoken = getToken(usession);
+var obj;
+$.ajax({
+  type: "POST",
+  url: "../yodlee/getTransactions.php",
+  data: { session: usession, usertoken: usertoken},
+  async: false
+})
+  .done(function( data ) {
+obj = data;  });
+return obj;
+}
+
+function findchecksum()
+{
+  var sum=0;
+  var obj = [];
+  var av=document.getElementsByName("checkamt");
+  for (var e=0;e<av.length;e++) {
+    if (av[e].checked==true) {
+        obj.push(parseFloat(av[e].value));
+       	sum+=parseFloat(av[e].value);
+   }
+  }
+
+  console.log(obj);
+  console.log(sum);
+  var giveneventid = $('input[type=radio]:checked').val();
+  $.post("addContribution.php", {amount: sum, eventid: giveneventid, what: $("#what").val()}).done(function(data) {
+    alert(data);
+  })
+
+}
+
+
+</script>
+
+<table border>
+<script type="text/javascript">
+var tranjson = getTransactions();
+console.log(tranjson);
+for(var t in tranjson.Body.searchResult.transactions)
+{
+	var ele = tranjson.Body.searchResult.transactions[t]; 
+
+	//if(ele.transactionType!="debit")
+	//	continue;
+	document.write("<tr>");
+
+	document.write("<td>"+ele.description.description+"</td>"+"<td>"+ele.amount.amount+" "+ele.amount.currencyCode+"</td><td>"+ele.postDate+"</td>"+"<td><input type=\"checkbox\" name=\"checkamt\" value="+ele.amount.amount+" /></td>");
+	document.write("</tr>");
+}
+</script>
+</table>
+<div id="tableDiv">
+</div>
+<!-- <input type="text" id="eventid" placeholder = "Enter Event ID"/> -->
+<input type="text" id="what"  placeholder="What did you pay for?"/>
+<br><br>
+<button onclick="findchecksum()">Submit</button>
+<div id="tableDiv">
+</div>
+<script type="text/javascript">
+$.post("getEvents.php").done(function(data) {
+    document.getElementById("tableDiv").innerHTML=data;
+  });
+</script>
+</body>
+</html>

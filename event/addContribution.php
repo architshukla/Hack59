@@ -1,8 +1,8 @@
 <?php
-	$eventid=4;
-	$username="archit";
-	$amount=1000;
-	$what="food";
+	$eventid=$_POST['eventid'];
+	$username="rohit";
+	$amount=$_POST["amount"];
+	$what=$_POST["what"];
 
 	require_once("../includes/connection.php");
 	if(mysqli_query($connection, "update eventmembers set amount=$amount, what='$what' where membername='$username' and eventid=$eventid") == FALSE)
