@@ -2,7 +2,8 @@
 	session_start();
 	if(isset($_SESSION['username']))
 		$membername = $_SESSION['username'];
-	$membername = "archit";
+	else
+		$membername = "archit";
 
 	require_once("../includes/connection.php");
 	$count=0;
