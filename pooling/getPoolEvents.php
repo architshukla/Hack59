@@ -17,7 +17,7 @@
 			else
 			{
 				$row2 = mysqli_fetch_array($data2);
-				echo "<input type='radio' value='".$row2["eventid"]."' name=eventid >".$row2["eventname"]."(EventId: ".$row2["eventid"].")"."</input>";
+				  echo "<label><input type='radio' name='eventid'  value='".$row2["eventid"]."'> ".$row2["eventname"]."(EventId: ".$row2["eventid"].")</label> <br/>";
 			}
 		}
 	}

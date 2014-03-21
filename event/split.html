@@ -17,7 +17,7 @@
   			$.post("split.php", {eventid: $("input[type=radio]:checked").val()}, true).done(function(done){
 
           var table = document.getElementById('splitTable');
-          table.innerHTML="";
+          table.innerHTML="<tr><th>Transaction</th><th>Amount</th><th>Description</th></tr>";
 
   				for(var i=0; i < done.length; i++)
   				{
@@ -45,12 +45,20 @@
   	</script>
 </head>
 <body>
-  <div id="tableDiv"></div>
 	<!-- <input type="text" id="eventid" placeholder="Enter Event ID"/> -->
-	<input type="button" onclick="showSplit();" value="Split the bills!"/>
-	<div>
-		<table id="splitTable" border>
+	
+  <div class="container">
+    <div class="row">
+  <div id="tableDiv"></div></div>
+  <div class="row">
+    <input class="btn btn-success" type="button" onclick="showSplit();" value="Split the bills!"/>
+  </row>  
+  <hr/>
+	<div class="row">
+  <div class="col-md-12">
+		<table class="table table-bordered table-hover"id="splitTable" border>
 		</table>
 	</div>
+  </div></div>
 </body>
 </html>

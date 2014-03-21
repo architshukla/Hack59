@@ -5,6 +5,8 @@
 
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 	<script type="text/javascript" src="../assets/js/jquery-1.11.0.js"></script>
 	<script type="text/javascript" >
 	$.post("getEvents.php").done(function(data) {
@@ -37,17 +39,19 @@
 
 		<form>
 
-		<label for="Add user">Enter Event ID</label>
+
 		<div id="tableDiv">
 		</div>
 
 		<!-- <input type="number" id="eventid" name="eventid" required> -->
 
-		<label for="Add user">Enter user name</label>
+		
+<div class="form-group">
+    <label for="exampleInputEmail1">Enter Username</label>
+    <input type="name" class="form-control" name="username" id="username" placeholder="Enter event">
+  </div>
 
-		<input type="text" id="username" name="username" required>
-
-		<input type="button" value="Add User" onclick="addUserToEvent()">
+		<input type="button"  class="btn btn-primary" value="Add User" onclick="addUserToEvent()">
 
 		</div>
 
