@@ -1,5 +1,9 @@
 <?php
-	$membername = "archit";
+	session_start();
+	if(isset($_SESSION['username']))
+		$membername = $_SESSION['username'];
+	else
+		$membername = "archit";
 
 	require_once("../includes/connection.php");
 	if(($data = mysqli_query($connection, "select * from eventmembers where membername='$membername'")) == FALSE)

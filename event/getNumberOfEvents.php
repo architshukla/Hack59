@@ -1,4 +1,7 @@
 <?php
+	session_start();
+	if(isset($_SESSION['username']))
+		$membername = $_SESSION['username'];
 	$membername = "archit";
 
 	require_once("../includes/connection.php");

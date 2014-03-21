@@ -1,6 +1,10 @@
 <?php
 	$eventid=$_POST['eventid'];
-	$username="rohit";
+	session_start();
+	if(isset($_SESSION['username']))
+		$username=$_SESSION['username'];
+	else
+		$username="archit";
 	$amount=$_POST["amount"];
 	$what=$_POST["what"];
 

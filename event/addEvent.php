@@ -1,6 +1,10 @@
 <?php
 	$eventname = $_POST['eventname'];
-	$creatorname = $_POST['creatorname'];
+	session_start();
+	if(isset($_SESSION['username']))
+		$creatorname = $_SESSION['username'];
+	else
+		$creatorname = "archit";
 
 	require_once("../includes/connection.php");
 	if(mysqli_query($connection, "insert into events(eventname, creatorname) values(\"$eventname\",\"$creatorname\");") == FALSE)
