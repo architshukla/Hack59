@@ -25,10 +25,22 @@ $.ajax({
 
 function getToken(usession){
 var usertoken;
+
+var send;
+$.ajax({
+  type: "POST",
+  url: "../yodlee/credentials.php",
+  async: false
+})
+  .done(function( data ) {
+send=data;
+  });
+
+
 $.ajax({
   type: "POST",
   url: "../yodlee/usertoken.php",
-  data: { login: "sbMemshashank1", password: "sbMemshashank1#123" , session: usession},
+  data: { login: send.login, password: send.password , session: usession},
   async: false
 })
   .done(function( data ) {
@@ -95,8 +107,8 @@ for(var t in tranjson.Body.searchResult.transactions)
 {
 	var ele = tranjson.Body.searchResult.transactions[t]; 
 
-	//if(ele.transactionType!="debit")
-	//	continue;
+	if(ele.transactionType!="debit")
+		continue;
 	document.write("<tr>");
 
 	document.write("<td>"+ele.description.description+"</td>"+"<td>"+ele.amount.amount+" "+ele.amount.currencyCode+"</td><td>"+ele.postDate+"</td>"+"<td><input type=\"checkbox\" name=\"checkamt\" value="+ele.amount.amount+" /></td>");

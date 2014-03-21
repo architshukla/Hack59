@@ -2,6 +2,7 @@
 
 <head>
 
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
 <link type="text/css" href="assets/css/c3.css" />
 <script type="text/javascript" src="assets/js/jquery-1.11.0.js"></script>
 <script type="text/javascript" src="assets/js/d3.js"></script>
@@ -27,10 +28,21 @@ $.ajax({
 
 function getToken(usession){
 var usertoken;
+var send;
+$.ajax({
+  type: "POST",
+  url: "yodlee/credentials.php",
+  async: false
+})
+  .done(function( data ) {
+send=data;
+  });
+
+
 $.ajax({
   type: "POST",
   url: "yodlee/usertoken.php",
-  data: { login: "sbMemshashank1", password: "sbMemshashank1#123" , session: usession},
+  data: { login: send.login, password: send.password , session: usession},
   async: false
 })
   .done(function( data ) {
@@ -59,7 +71,14 @@ return obj;
 
 </script>
 
-<table border>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+<table class="table table-bordered table-hover table-striped">
+  <tr>
+    <th>Category</th>
+    <th>Total Spend</th>
+  </tr>
 <script type="text/javascript">
 var tranjson = getTransactions();
 var cat = {};
@@ -70,8 +89,13 @@ for(var t in tranjson.Body.searchResult.transactions)
 {
 
 	var ele = tranjson.Body.searchResult.transactions[t]; 
+
+  if(ele.transactionType!="debit")
+    continue;
+
 	var catname  = ele.category.categoryName;
-	console.log(catname);
+
+
 	if (catname in cat)
 		cat[catname] += parseFloat(ele.amount.amount);
 
@@ -97,11 +121,14 @@ for(ele in cat){
 }
 </script>
 </table>
-
+</div>
+<div class="col-md-6">
 <div class='chart'>
 <div id='chart'></div>
 </div>
-
+</div>
+</div>
+</div>
 <script type="text/javascript">
 var chart = c3.generate({
     data: {
