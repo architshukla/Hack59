@@ -7,7 +7,6 @@
 </head>
 <body>
 <script type="text/javascript">
-
 function getCobrand(){
 var usession;
 $.ajax({
@@ -67,7 +66,8 @@ function findchecksum()
 
   console.log(obj);
   console.log(sum);
-  $.post("addContribution.php", {amount: sum, eventid: $("#eventid").val(), what: $("#what").val()}).done(function(data) {
+  var giveneventid = $('input[type=radio]:checked').val();
+  $.post("addContribution.php", {amount: sum, eventid: giveneventid, what: $("#what").val()}).done(function(data) {
     alert(data);
   })
 
@@ -93,9 +93,18 @@ for(var t in tranjson.Body.searchResult.transactions)
 }
 </script>
 </table>
-<input type="text" id="eventid" placeholder = "Enter Event ID"/>
+<div id="tableDiv">
+</div>
+<!-- <input type="text" id="eventid" placeholder = "Enter Event ID"/> -->
 <input type="text" id="what"  placeholder="What did you pay for?"/>
 <br><br>
 <button onclick="findchecksum()">Submit</button>
+<div id="tableDiv">
+</div>
+<script type="text/javascript">
+$.post("getEvents.php").done(function(data) {
+    document.getElementById("tableDiv").innerHTML=data;
+  });
+</script>
 </body>
 </html>

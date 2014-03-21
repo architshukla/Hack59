@@ -1,5 +1,5 @@
 <?php
-	$eventid=4;
+	$eventid=$_POST['eventid'];
 
 	function sortAsc($a, $b)
 	{

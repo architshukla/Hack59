@@ -1,4 +1,3 @@
-
 <!doctype html>
 <head>
 
@@ -8,10 +7,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<script type="text/javascript" src="../assets/js/jquery-1.11.0.js"></script>
 	<script type="text/javascript" >
+	$.post("getEvents.php").done(function(data) {
+		document.getElementById("tableDiv").innerHTML=data;
+	});
 
 	function addUserToEvent() {
 		var username = $('#username').val();
-		var giveneventid = $('#eventid').val();
+		var giveneventid = $('input[type=radio]:checked').val();
 		if (username || giveneventid ) {
 			$.post("addUserToEvent.php", { membername: username, eventid:  giveneventid} ,true).done(function(data){
 				alert(data);
@@ -36,8 +38,10 @@
 		<form>
 
 		<label for="Add user">Enter Event ID</label>
+		<div id="tableDiv">
+		</div>
 
-		<input type="number" id="eventid" name="eventid" required>
+		<!-- <input type="number" id="eventid" name="eventid" required> -->
 
 		<label for="Add user">Enter user name</label>
 
@@ -50,6 +54,7 @@
 		</form>
 
 	</div>
+	
 
 	<!-- End Page Content -->
 
