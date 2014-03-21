@@ -1,6 +1,10 @@
 <?php
 	$eventname = $_POST['eventname'];
-	$creatorname = $_POST['creatorname'];
+	session_start();
+	if(isset($_SESSION['username']))
+		$creatorname = $_SESSION['username'];
+	else
+		$creatorname = "archit";
 	$amount = $_POST['amount'];
 
 	require_once("../includes/connection.php");
