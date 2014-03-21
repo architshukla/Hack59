@@ -8,13 +8,32 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<script type="text/javascript" src="../assets/js/jquery-1.11.0.js"></script>
 	<script type="text/javascript" >
+	$.post("getPoolEvents.php").done(function(data) {
+		document.getElementById("tableDiv").innerHTML=data;
+	});
 
 	function getPledgeList() {
 		var username = 'shashank';
-		var giveneventid = $('#eventid').val();
-		if (eventid ) {
-			$.post("getPledgeList.php", { eventid:  giveneventid} ,true).done(function(data){
-				alert(data);
+		var giveneventid = $('input[type=radio]:checked').val();
+		if (giveneventid ) {
+			$.post("getPledgeList.php", { eventid:  giveneventid} ,true).done(function(done){
+				var table = document.getElementById('pledgeTable');
+          		table.innerHTML="";
+
+  				for(var i=0; i < done.length; i++)
+  				{
+  					var table = document.getElementById('pledgeTable');
+  					var lastRow = table.rows.length;
+  					var row = table.insertRow(lastRow);
+  					
+  					var cellLeft = row.insertCell(0);
+  					var textNode = document.createTextNode(done[i]["name"]);
+  					cellLeft.appendChild(textNode);
+
+  					var cellLeft = row.insertCell(1);
+  					var textNode = document.createTextNode(done[i]["amount"]);
+  					cellLeft.appendChild(textNode);
+  				}
 			});
 		}else {
 			alert("message: Enter eventid");
@@ -37,14 +56,17 @@
 
 		<label for="Enter event id">get Pledge list</label>
 
-		<input type="number" id="eventid" name="eventid" required>
-		<input type="button" value="get list" onclick="getPledgeList()">
+		<div id="tableDiv">
+		</div>
+		<!-- <input type="number" id="eventid" name="eventid" required> -->
+		<input type="button" value="Get Pledge list" onclick="getPledgeList()">
 
 		</div>
 
 		</form>
 
 	</div>
+	<table id='pledgeTable' border></table>
 
 	<!-- End Page Content -->
 

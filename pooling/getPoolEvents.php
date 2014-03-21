@@ -1,5 +1,5 @@
 <?php
-	$membername = "rohit";
+	$membername = "archit";
 
 	require_once("../includes/connection.php");
 	if(($data = mysqli_query($connection, "select * from poolmembers where membername='$membername'")) == FALSE)
@@ -17,7 +17,7 @@
 			else
 			{
 				$row2 = mysqli_fetch_array($data2);
-				echo $row2["eventid"]." ".$row2["eventname"]."<br>";
+				echo "<input type='radio' value='".$row2["eventid"]."' name=eventid >".$row2["eventname"]."(EventId: ".$row2["eventid"].")"."</input>";
 			}
 		}
 	}

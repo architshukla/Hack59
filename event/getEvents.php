@@ -1,5 +1,5 @@
 <?php
-	$membername = "rohit";
+	$membername = "archit";
 
 	require_once("../includes/connection.php");
 	if(($data = mysqli_query($connection, "select * from eventmembers where membername='$membername'")) == FALSE)

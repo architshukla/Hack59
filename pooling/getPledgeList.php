@@ -19,6 +19,7 @@
 					array_push($jsonArray, array("name"=>$pledger["membername"], "amount"=> $pledger["amount"]));
 				}		
 			}
+			header('Content-type: application/json');
 			echo json_encode($jsonArray);
 		}else{
 			echo "message: pool event is not yet settled to view the list";
